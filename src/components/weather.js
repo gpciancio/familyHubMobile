@@ -20,11 +20,11 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
 
 const htmlContent = `
   <div>
-    <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showPrint=0&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=familyhub123%40gmail.com&amp;color=%231B887A&amp;ctz=America%2FDenver" width="900" height="1000" />
+    <iframe src="https://www.powr.io/plugins/weather/view?unique_label=6ab3252a_1500745897&external_type=iframe" width="900" height="1000" />
   </div>
 `;
 
-class Calendar extends React.Component {
+class Weather extends React.Component {
   render() {
     return (
       <HTMLView
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Calendar
+export default Weather
