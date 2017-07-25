@@ -55,7 +55,6 @@ class TodoContainer extends React.Component {
   }
 
   markItemCompleted = itemId => {
-    console.log("updating", itemId);
     var updatedItems = this.state.items.map(item => {
       if (itemId === item.id)
         item.done = !item.done;
@@ -98,7 +97,9 @@ class TodoContainer extends React.Component {
         <Button
           onPress={this.handleAddItem}
           title="Add"
+          color="#841584"
           accessibilityLabel="Add item"
+          disabled={this.state.text.length === 0}
         />
       </View>
     )
@@ -110,18 +111,20 @@ class TodoList extends React.Component {
   render() {
     return (
       <View>
-      <FlatList
-        data={this.props.items}
-        renderItem={({item}) =>
-          <TodoListItem
-            id={item.id}
-            text={item.text}
-            done={item.done}
-            onItemCompleted = {this.props.onItemCompleted}
-            onDeleteItem = {this.props.onDeleteItem}
-          />
-        }
-      />
+        <FlatList
+          data={this.props.items}
+          style={{height: 200}}
+          scrollEnabled={true}
+          renderItem={({item}) =>
+            <TodoListItem
+              id={item.id}
+              text={item.text}
+              done={item.done}
+              onItemCompleted = {this.props.onItemCompleted}
+              onDeleteItem = {this.props.onDeleteItem}
+            />
+          }
+        />
       </View>
     )
   }
@@ -131,7 +134,6 @@ class TodoList extends React.Component {
 class TodoListItem extends React.Component {
 
    markCompleted = checked => {
-     console.log('I am checked', checked);
      this.props.onItemCompleted(this.props.id);
    }
 
