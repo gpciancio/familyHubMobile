@@ -9,8 +9,14 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View >
-        <TodoContainer/>
+      <View
+        style={{backgroundColor: '#527FE4',
+                top: 100,
+                width: 300
+        }}
+      >
+        <TodoContainer
+        />
         <Weather />
         <Calendar />
       </View>

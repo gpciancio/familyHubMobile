@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text , View, TextInput } from 'react-native';
+import { Text, View, TextInput, FlatList, Button } from 'react-native';
 
 class TodoContainer extends React.Component {
   constructor(props) {
      super(props);
 
      this.state = {
-       items: [],
+       items: [{id: 1, text: "item 1", done: false}, {id: 2, text: "item 2", done: true}],
        text: ""
      };
 
@@ -56,13 +56,20 @@ class TodoContainer extends React.Component {
     return (
       <View >
         <Text>MY TO DO LIST</Text>
-        <TodoList/>
+        <TodoList
+          items={this.state.items}/>
         <TextInput
-          style={{height: 40}}
+          style={{height: 40,
+                  backgroundColor: '#ffffff'}}
           placeholder="Add todo..."
           onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
         />
-        <Text>MY TO DO LIST</Text>
+        <Button
+          onPress={this.handleAddItem}
+          title="Add"
+          accessibilityLabel="Add item"
+        />
       </View>
     )
   }
@@ -73,8 +80,10 @@ class TodoList extends React.Component {
   render() {
     return (
       <View>
-        <Text> Todo List </Text>
-        <TodoListItem/>
+      <FlatList
+        data={this.props.items}
+        renderItem={({item}) => <Text>{item.text}</Text>}
+      />
       </View>
     )
   }
@@ -99,7 +108,7 @@ class TodoListItem extends React.Component {
 
   render() {
     return (
-      <Text> List Item </Text>
+      <Text> {this.props.text} </Text>
     );
   }
 
