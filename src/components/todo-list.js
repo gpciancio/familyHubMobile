@@ -1,5 +1,7 @@
 import React from 'react';
 import { Text, View, TextInput, FlatList, Button, AsyncStorage } from 'react-native';
+import CheckBox from 'react-native-checkbox';
+
 
 class TodoContainer extends React.Component {
   constructor(props) {
@@ -53,6 +55,7 @@ class TodoContainer extends React.Component {
   }
 
   markItemCompleted = itemId => {
+    console.log("updating", itemId);
     var updatedItems = this.state.items.map(item => {
       if (itemId === item.id)
         item.done = !item.done;
@@ -81,7 +84,10 @@ class TodoContainer extends React.Component {
       <View >
         <Text>MY TO DO LIST</Text>
         <TodoList
-          items={this.state.items}/>
+          items={this.state.items}
+          onItemCompleted={this.markItemCompleted}
+          onDeleteItem={this.handleDeleteItem}
+        />
         <TextInput
           style={{height: 40,
                   backgroundColor: '#ffffff'}}
@@ -106,7 +112,15 @@ class TodoList extends React.Component {
       <View>
       <FlatList
         data={this.props.items}
-        renderItem={({item}) => <Text>{item.text}</Text>}
+        renderItem={({item}) =>
+          <TodoListItem
+            id={item.id}
+            text={item.text}
+            done={item.done}
+            onItemCompleted = {this.props.onItemCompleted}
+            onDeleteItem = {this.props.onDeleteItem}
+          />
+        }
       />
       </View>
     )
@@ -115,24 +129,32 @@ class TodoList extends React.Component {
 }
 
 class TodoListItem extends React.Component {
-  constructor(props) {
-     super(props);
-     this.markCompleted = this.markCompleted.bind(this);
-     this.deleteItem = this.deleteItem.bind(this);
-   }
 
-   markCompleted(event) {
+   markCompleted = checked => {
+     console.log('I am checked', checked);
      this.props.onItemCompleted(this.props.id);
    }
 
-   deleteItem(event) {
+   deleteItem = event => {
      this.props.onDeleteItem(this.props.id);
    }
 
 
   render() {
     return (
-      <Text> {this.props.text} !</Text>
+      <View>
+        <CheckBox
+          label={this.props.text}
+          labelStyle={{color: "black"}}
+          checked={this.props.done}
+          onChange={this.markCompleted}
+        />
+        <Button
+          onPress={this.deleteItem}
+          title="X"
+          accessibilityLabel="Delete item"
+        />
+      </View>
     );
   }
 
