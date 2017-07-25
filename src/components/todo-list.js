@@ -1,17 +1,41 @@
 import React from 'react';
-import { Text, View, TextInput, FlatList, Button } from 'react-native';
+import { Text, View, TextInput, FlatList, Button, AsyncStorage } from 'react-native';
 
 class TodoContainer extends React.Component {
   constructor(props) {
      super(props);
 
      this.state = {
-       items: [{id: 1, text: "item 1", done: false}, {id: 2, text: "item 2", done: true}],
+       items: [],
        text: ""
      };
 
   }
 
+  componentDidUpdate(){
+    this.saveState();
+  }
+
+  componentDidMount(){
+    this.loadState();
+  }
+
+  saveState = () => {
+    const serializedState = JSON.stringify(this.state.items);
+    AsyncStorage.setItem('famhub-todo-items', serializedState);
+  }
+
+  loadState = () => {
+    AsyncStorage.getItem('famhub-todo-items').then((items) => {
+      if (items !== null) {
+        const storedItems = JSON.parse(items);
+        this.setState({
+          items: storedItems
+        });
+      }
+      return;
+    })
+ }
 
   handleAddItem = event => {
     event.preventDefault();
@@ -108,7 +132,7 @@ class TodoListItem extends React.Component {
 
   render() {
     return (
-      <Text> {this.props.text} </Text>
+      <Text> {this.props.text} !</Text>
     );
   }
 
