@@ -34,11 +34,5 @@ class Calendar extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  a: {
-    fontWeight: '300',
-    color: '#FF3366', // make links coloured pink
-  },
-});
 
 export default Calendar
